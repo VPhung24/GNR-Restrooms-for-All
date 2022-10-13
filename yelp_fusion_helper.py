@@ -21,7 +21,7 @@ except ImportError:
     from urllib import urlencode
 
 
-API_KEY= "yBGMwJeJowM6Co8_xWRmwVTVihhCVvNmICaUdOZsxechL4Yl1X1r2_cYkt1IoLL4L-V_64QqpHYd3BzICwa2TMjyksbe-0f8vPGVeksoZF8H9KUH64oBGv2Qbbj3WXYx"
+API_KEY= ${{ RAILWAY_API_KEY }}
 
 
 # API constants, you shouldn't have to change these.
