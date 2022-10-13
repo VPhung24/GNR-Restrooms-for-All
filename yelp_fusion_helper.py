@@ -22,8 +22,7 @@ except ImportError:
     from urllib import urlencode
 
 
-API_KEY= os.getenv('RAILWAY_API_KEY')
-
+API_KEY= os.getenv('API_KEY')
 
 # API constants, you shouldn't have to change these.
 API_HOST = 'https://api.yelp.com'
