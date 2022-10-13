@@ -21,7 +21,7 @@ except ImportError:
     from urllib import urlencode
 
 
-API_KEY= ${{ RAILWAY_API_KEY }}
+API_KEY= os.getenv('RAILWAY_API_KEY')
 
 
 # API constants, you shouldn't have to change these.
