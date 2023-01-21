@@ -15,3 +15,4 @@ chardet==5.1.0
 idna==3.4 
 setuptools==66.1.1 
 python-dotenv==0.21.0
+Bootstrap-Flask==2.2.0
