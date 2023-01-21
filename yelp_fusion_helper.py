@@ -2,27 +2,12 @@ from __future__ import print_function
 
 import os
 import argparse
-import json
-import pprint
 import requests
 import sys
-import urllib
+from urllib.error import HTTPError
+from urllib.parse import quote
 
-# This client code can run on Python 2.x or 3.x.  Your imports can be
-# simpler if you only need one of those.
-try:
-    # For Python 3.0 and later
-    from urllib.error import HTTPError
-    from urllib.parse import quote
-    from urllib.parse import urlencode
-except ImportError:
-    # Fall back to Python 2's urllib2 and urllib
-    from urllib2 import HTTPError
-    from urllib import quote
-    from urllib import urlencode
-
-
-API_KEY= os.getenv('API_KEY')
+API_KEY = os.getenv('API_KEY')
 
 # API constants, you shouldn't have to change these.
 API_HOST = 'https://api.yelp.com'
@@ -34,6 +19,7 @@ BUSINESS_PATH = '/v3/businesses/'  # Business ID will come after slash.
 DEFAULT_TERM = 'dinner'
 DEFAULT_LOCATION = 'San Francisco, CA'
 SEARCH_LIMIT = 6
+
 
 def request(host, path, api_key, url_params=None):
     url_params = url_params or {}
@@ -66,8 +52,9 @@ def get_business(api_key, business_id):
 def query_api(term, location):
 
     response = search(API_KEY, term, location)
-    
+
     return response
+
 
 def main():
     parser = argparse.ArgumentParser()
