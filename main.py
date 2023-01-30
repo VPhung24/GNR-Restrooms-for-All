@@ -16,6 +16,7 @@ def main_route():
         location_user = request.form['location']
         type_user = request.form['type']
         search = SearchEngine()
+        # quick refactor: validation should be done on the front end
         if (len(location_user) == 0) or (len(type_user) == 0):
             found = False
             error = "Please provide inputs."
