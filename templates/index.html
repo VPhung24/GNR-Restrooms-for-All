@@ -3,65 +3,174 @@
   class="container-fluid"
   style="padding-left: 12%; padding-right: 12%; min-height: 100%"
 >
-  <br /><br />
-  <div class="d-none d-md-block d-lg-none"><br /><br /></div>
-  <div class="d-none d-lg-block"><br /><br /><br /><br /><br /><br /></div>
+<br /><br />
+<div class="d-none d-md-block d-lg-none"><br /><br /></div>
+<div class="d-none d-lg-block"><br /><br /><br /><br /><br /><br /></div>
   <div class="d-none d-lg-block">
     <h1>Find Gender Neutral Restrooms</h1>
   </div>
 
   <form method="post" class="form-inline">
-    <div class="d-block d-sm-block"><br /><br /></div>
-    <div class="row">
-      <div class="col-md-auto" style="padding-bottom: 10px">
-        <a href="" class="btn btn-light disabled" role="button" tabindex="-1"
-          >Zip Code</a
-        >
-        <input
-          type="text"
-          id="myInput"
-          class="form-control btn-light"
-          placeholder="Ex: 94545, 94501, 94502"
-          name="location"
-          value="{{ request.form.location }}"
-          aria-label="Ex: 94545, 94501, 94502"
-        />
-      </div>
-      <div class="col-md-auto" style="padding-bottom: 10px">
-        <a href="" class="btn btn-light disabled" role="button" tabindex="-1"
-          >Type of Establishment</a
-        >
-        <input
-          type="text"
-          id="myInput"
-          class="form-control btn-light"
-          placeholder="Ex: Sushi, Fries, Steak"
-          name="type"
-          value="{{ request.form.type }}"
-          aria-label="Ex: Sushi, Fries, Steak"
-        />
-      </div>
-      <div class="col-md-1">
-        <input
-          class="btn btn-light"
-          id="submitkey"
-          type="submit"
-          value="Submit"
-        />
-      </div>
+  <div class="d-block d-sm-block"><br /><br /></div>
+  <div class="row">
+    <div class="col-md-auto" style="padding-bottom: 10px">
+      <input
+        type="text"
+        id="myInput"
+        class="form-control btn-light"
+        placeholder="Ex: Sushi, Fries, Steak"
+        name="type"
+        value="{{ request.form.type }}"
+        aria-label="Ex: Sushi, Fries, Steak"
+      />
     </div>
 
-    <script>
-      var input = document.getElementById("myInput");
+    <div class="col-md-auto" style="padding-bottom: 10px">
+      <div class="dropdown">
+        <input
+          type="text"
+          class="form-control"
+          id="addressInput"
+          placeholder="Enter address or zip code"
+          autocomplete="off"
+          name="location"
+        />
+        <ul class="dropdown-menu" id="addressDropdown"></ul>
+      </div>
+    </div>
+    <div class="col-md-1">
+      <input
+        class="btn btn-light"
+        id="submitkey"
+        type="submit"
+        value="Submit"
+      />
+    </div>
+  </div>
+
+  {{ error }}
+  <br /><br />
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function () {
+    let typingTimer;
+    const doneTypingInterval = 300; // milliseconds
+
+    $("#addressInput").on("input", function () {
+      clearTimeout(typingTimer);
+      const input = $(this).val();
+      if (input.length >= 3) {
+        typingTimer = setTimeout(function () {
+          fetchAddressSuggestions(input);
+        }, doneTypingInterval);
+      } else {
+        $("#addressDropdown").empty().hide();
+      }
+    });
+
+    function fetchAddressSuggestions(input) {
+      $.ajax({
+        url: "/autocomplete",
+        method: "GET",
+        data: { input: input },
+        success: function (data) {
+          displaySuggestions(data);
+        },
+        error: function () {
+          $("#addressDropdown").empty().hide();
+        },
+      });
+    }
+
+    function displaySuggestions(suggestions) {
+      const $dropdown = $("#addressDropdown");
+      $dropdown.empty();
+
+      if (suggestions.length > 0) {
+        suggestions.forEach(function (suggestion) {
+          $("<li>")
+            .text(suggestion.description)
+            .data("place_id", suggestion.place_id)
+            .on("click", function () {
+              $("#addressInput").val(suggestion.description);
+              $dropdown.empty().hide();
+              getZipCode(suggestion.place_id);
+            })
+            .appendTo($dropdown);
+        });
+        $dropdown.show();
+      } else {
+        $dropdown.hide();
+      }
+    }
+
+    function getZipCode(placeId) {
+      $.ajax({
+        url: "/get_details",
+        method: "GET",
+        data: { place_id: placeId },
+        success: function (data) {
+          if (data.zip_code) {
+            console.log("Zip Code:", data.zip_code);
+            // You can use this zip code for further processing or form submission
+          }
+        },
+        error: function () {
+          console.log("Error fetching place details");
+        },
+      });
+    }
+
+    $(document).on("click", function (e) {
+      if (!$(e.target).closest(".dropdown").length) {
+        $("#addressDropdown").empty().hide();
+      }
+    });
+  });
+
+  var input = document.getElementById("myInput");
       input.addEventListener("keyup", function (event) {
         event.preventDefault();
         if (event.keyCode === 13) {
           document.getElementById("submitkey").click();
         }
       });
-    </script>
-  </form>
-  {{ error }}
-  <br /><br />
-</div>
+</script>
+
+<style>
+  .dropdown {
+    position: relative;
+  }
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    margin: 0.125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.25rem;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  .dropdown-menu li {
+    padding: 0.25rem 1.5rem;
+    cursor: pointer;
+  }
+  .dropdown-menu li:hover {
+    background-color: #f8f9fa;
+  }
+</style>
+
 {% endblock %}

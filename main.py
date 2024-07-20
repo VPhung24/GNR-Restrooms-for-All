@@ -5,6 +5,7 @@ from uszipcode import SearchEngine
 from yelp_fusion_helper import fetch_businesses, get_total_results
 import os
 import threading
+import requests
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 app.url_map.strict_slashes = False
@@ -18,6 +19,7 @@ db = SQLAlchemy(app)
 
 # Thread-local storage for the SearchEngine instance
 search_engine_local = threading.local()
+GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
 
 
 # Define Business model
@@ -48,12 +50,6 @@ def main_route():
                 "index.html", error="Please provide inputs.", found=False
             )
 
-        search = get_search_engine()
-        if not (len(location_user) == 5 and search.by_zipcode(location_user)):
-            return render_template(
-                "index.html", error="Sorry! Please input a valid zipcode.", found=False
-            )
-
         if len(type_user) <= 3:
             return render_template(
                 "index.html",
@@ -61,10 +57,118 @@ def main_route():
                 found=False,
             )
 
+        # Validate and process the location
+        zip_code = get_zip_code(location_user)
+        if not zip_code:
+            return render_template(
+                "index.html",
+                error="Sorry! Unable to determine a valid zip code from the provided location.",
+                found=False,
+            )
+
         # Redirect to results page
-        return redirect(url_for("results", location=location_user, type=type_user))
+        return redirect(url_for("results", location=zip_code, type=type_user))
 
     return render_template("index.html", found=False)
+
+
+@app.route("/autocomplete", methods=["GET"])
+def autocomplete():
+    input_text = request.args.get("input", "")
+
+    if len(input_text) < 3:
+        return jsonify([])
+
+    url = "https://maps.googleapis.com/maps/api/place/autocomplete/json"
+    params = {
+        "input": input_text,
+        "types": "(regions)",
+        "components": "country:us",
+        "key": GOOGLE_API_KEY,
+    }
+
+    response = requests.get(url, params=params)
+    results = response.json().get("predictions", [])
+
+    suggestions = [
+        {"description": result["description"], "place_id": result["place_id"]}
+        for result in results
+    ]
+
+    return jsonify(suggestions)
+
+
+@app.route("/get_details", methods=["GET"])
+def get_details():
+    place_id = request.args.get("place_id", "")
+
+    if not place_id:
+        return jsonify({"error": "No place_id provided"})
+
+    url = "https://maps.googleapis.com/maps/api/place/details/json"
+    params = {
+        "place_id": place_id,
+        "fields": "address_component",
+        "key": GOOGLE_API_KEY,
+    }
+
+    response = requests.get(url, params=params)
+    result = response.json().get("result", {})
+
+    zip_code = next(
+        (
+            component["long_name"]
+            for component in result.get("address_components", [])
+            if "postal_code" in component["types"]
+        ),
+        None,
+    )
+
+    return jsonify({"zip_code": zip_code})
+
+
+def get_zip_code(location):
+    # First, check if the location is already a valid zip code
+    search = get_search_engine()
+    if len(location) == 5 and search.by_zipcode(location):
+        return location
+
+    # If not, try to get the zip code from Google Places API
+    url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json"
+    params = {
+        "input": location,
+        "inputtype": "textquery",
+        "fields": "place_id",
+        "key": GOOGLE_API_KEY,
+    }
+
+    response = requests.get(url, params=params)
+    result = response.json().get("candidates", [])
+
+    if result:
+        place_id = result[0]["place_id"]
+        details_url = "https://maps.googleapis.com/maps/api/place/details/json"
+        details_params = {
+            "place_id": place_id,
+            "fields": "address_component",
+            "key": GOOGLE_API_KEY,
+        }
+
+        details_response = requests.get(details_url, params=details_params)
+        details_result = details_response.json().get("result", {})
+
+        zip_code = next(
+            (
+                component["long_name"]
+                for component in details_result.get("address_components", [])
+                if "postal_code" in component["types"]
+            ),
+            None,
+        )
+
+        return zip_code
+
+    return None
 
 
 # TODO: optimize pagination
