@@ -1,0 +1,84 @@
+{% extends "header.html" %} {% block content %}
+
+<div
+  class="container-fluid"
+  style="padding-left: 12%; padding-right: 12%; min-height: 100%"
+>
+  <br /><br />
+  <h3 class="text-center" style="font-family: 'Lato', sans-serif">
+    Here are your results for {{ type }} in {{ location }}!
+  </h3>
+  <br /><br />
+  <div class="container-fluid">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+      {% for business in businesses %}
+      <div class="col mb-4">
+        <div class="card h-100 bg-transparent w3-card-4 rounded">
+          <a href="{{ business.url }}" target="_blank" class="card-img-top">
+            <div style="height: 200px; overflow: hidden">
+              <img
+                src="{{ business.image_url }}"
+                class="w-100 h-100"
+                style="object-fit: cover"
+              />
+            </div>
+          </a>
+          <div class="card-body bg-transparent">
+            <h5 class="card-title" style="font-family: 'Lato', sans-serif">
+              {{ business.name }}
+            </h5>
+            <p>{{ business.location }}</p>
+          </div>
+          <div class="card-footer bg-transparent">
+            <small
+              >{{ business.rating }} | Rated by {{ business.review_count
+              }}</small
+            >
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+      {% if current_page > 1 %}
+      <li class="page-item">
+        <a
+          class="page-link"
+          href="{{ url_for('results', page=current_page-1, location=location, type=type) }}"
+          >Previous</a
+        >
+      </li>
+      {% endif %} {% set start = [current_page - 1, 1] | max %} {% set end =
+      [start + 1, total_pages] | min %} {% for page_num in range(start, end + 1)
+      %} {% if page_num == current_page %}
+      <li class="page-item active">
+        <span class="page-link">
+          {{ page_num }}
+          <span class="sr-only">(current)</span>
+        </span>
+      </li>
+      {% else %}
+      <li class="page-item">
+        <a
+          class="page-link"
+          href="{{ url_for('results', page=page_num, location=location, type=type) }}"
+          >{{ page_num }}</a
+        >
+      </li>
+      {% endif %} {% endfor %} {% if current_page < total_pages %}
+      <li class="page-item">
+        <a
+          class="page-link"
+          href="{{ url_for('results', page=current_page+1, location=location, type=type) }}"
+          >Next</a
+        >
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+</div>
+
+{% endblock %}

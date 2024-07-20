@@ -1,4 +1,3 @@
-
 # Created by https://www.toptal.com/developers/gitignore/api/python
 # Edit at https://www.toptal.com/developers/gitignore?templates=python
 
@@ -154,6 +153,6 @@ dmypy.json
 pyvenv.cfg
 .venv
 pip-selfcheck.json
-
+.DS_Store
 
 # End of https://www.toptal.com/developers/gitignore/api/python

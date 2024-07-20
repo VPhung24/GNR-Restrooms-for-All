@@ -61,35 +61,46 @@ def query_api(term, location):
     return response
 
 
-def main():
-    parser = argparse.ArgumentParser(description="Yelp API search example")
-    parser.add_argument(
-        "-q",
-        "--term",
-        dest="term",
-        default=DEFAULT_TERM,
-        type=str,
-        help="Search term (default: %(default)s)",
-    )
-    parser.add_argument(
-        "-l",
-        "--location",
-        dest="location",
-        default=DEFAULT_LOCATION,
-        type=str,
-        help="Search location (default: %(default)s)",
-    )
+def fetch_businesses(term, location, page, items_per_page):
+    """
+    Fetches businesses from Yelp API with pagination support.
+    """
+    url_params = {
+        "term": term.replace(" ", "+"),
+        "location": location.replace(" ", "+"),
+        "limit": items_per_page,
+        "offset": (page - 1) * items_per_page,
+        "attributes": "gender_neutral_restrooms",
+    }
+    response = request(API_HOST, SEARCH_PATH, API_KEY, url_params)
 
-    args = parser.parse_args()
+    businesses = response.get("businesses", [])
 
-    try:
-        response = query_api(args.term, args.location)
-        print(response)
-    except HTTPError as error:
-        sys.exit(
-            f"Encountered HTTP error {error.code} on {error.url}:\n{error.read()}\nAbort program."
-        )
+    # Format the business data as needed
+    formatted_businesses = []
+    for business in businesses:
+        formatted_business = {
+            "url": business["url"],
+            "image_url": business["image_url"],
+            "name": business["name"],
+            "location": ", ".join(business["location"]["display_address"]),
+            "rating": business["rating"],
+            "review_count": business["review_count"],
+        }
+        formatted_businesses.append(formatted_business)
+
+    return formatted_businesses
 
 
-if __name__ == "__main__":
-    main()
+def get_total_results(term, location):
+    """
+    Gets the total number of results for the given search term and location.
+    """
+    url_params = {
+        "term": term.replace(" ", "+"),
+        "location": location.replace(" ", "+"),
+        "attributes": "gender_neutral_restrooms",
+    }
+    response = request(API_HOST, SEARCH_PATH, API_KEY, url_params)
+
+    return response.get("total", 0)
