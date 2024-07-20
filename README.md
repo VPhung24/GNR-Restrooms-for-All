@@ -4,7 +4,7 @@ built in high school
 
 ## set in `.zshrc`
 
-```
+```zsh
 export FLASK_APP=main.py
 export FLASK_DEBUG=true
 ```
@@ -15,9 +15,9 @@ export FLASK_DEBUG=true
 - `. venv/bin/activate` enter virtual env
 - `deactivate` leave virtual env
 
-## requirement 
+## requirement
 
-- python3.10 
+- python3.10
 
 ## install dependencies
 
@@ -25,11 +25,8 @@ export FLASK_DEBUG=true
 
 ## create .env in project directory
 
-- `touch .env`
-- in `.env` file, add secrets
-
-```
-API_KEY='<api_key>`
+```zsh
+cp .env.example .env
 ```
 
 ## run app (dev)

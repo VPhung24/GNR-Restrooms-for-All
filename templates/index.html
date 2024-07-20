@@ -1,111 +1,139 @@
-{% extends "header.html" %}
+{% extends "header.html" %} {% block content %}
+<div
+  class="container-fluid"
+  style="padding-left: 12%; padding-right: 12%; min-height: 100%"
+>
+  {% if not found %}
+  <br /><br />
+  <div class="d-none d-md-block d-lg-none"><br /><br /></div>
+  <div class="d-none d-lg-block"><br /><br /><br /><br /><br /><br /></div>
+  <div class="d-none d-lg-block">
+    <h1>Find Gender Neutral Restrooms</h1>
+  </div>
+  <div class="d-lg-none">
+    <h2>Find Gender Neutral Restrooms</h2>
+  </div>
 
-{% block content %}
-
-{% if not found %}
-<div class="container-fluid" style="padding-left: 12%; padding-right: 12%; min-height: 100%;">
-<br> </br>
-
-    <div class="d-none d-md-block d-lg-none">
-        <br> </br>
-    </div>
-
-    <div class="d-none d-lg-block">
-        <br> </br>
-        <br> </br>
-        <br> </br>
-        <br> </br>
-    </div>
-    <div class="d-none d-lg-block">
-        <h1> Find Gender Neutral Restrooms</h1>
-    </div>
-
-    <div class="d-lg-none">
-        <h2> Find Gender Neutral Restrooms</h2>
-    </div>
-
-
-<form method="post" class="form-inline">
-
-    <div class="d-block d-sm-block">
-        <br> </br>
-    </div>
-
+  <form method="post" class="form-inline">
+    <div class="d-block d-sm-block"><br /><br /></div>
     <div class="row">
-        <div class="col-md-auto" style="padding-bottom:10px" ><a href="" class="btn btn-light disabled" role="button" tabindex="-1">Zip Code</a>
-                <input type="text" id="myInput" class="form-control btn-light" placeholder="Ex: 94545, 94501, 94502" name="location" value="{{request.form.location}}" aria-label="Ex: 94545, 94501, 94502">
-            </div>
-        <div class="col-md-auto" style="padding-bottom:10px" ><a href="" class="btn btn-light disabled" role="button" tabindex="-1">Type of Establishment</a>
-                <input type="text" id="myInput" class="form-control btn-light" placeholder="Ex: Sushi, Fries, Steak" name="type" value="{{request.form.type}}" aria-label="Ex: Sushi, Fries, Steak"><br>
-            </div>
-        <div class="col-md-1"><input class="btn btn-light" id="submitkey" type="submit" value="Submit">
-            </div>
+      <div class="col-md-auto" style="padding-bottom: 10px">
+        <a href="" class="btn btn-light disabled" role="button" tabindex="-1"
+          >Zip Code</a
+        >
+        <input
+          type="text"
+          id="myInput"
+          class="form-control btn-light"
+          placeholder="Ex: 94545, 94501, 94502"
+          name="location"
+          value="{{ request.form.location }}"
+          aria-label="Ex: 94545, 94501, 94502"
+        />
+      </div>
+      <div class="col-md-auto" style="padding-bottom: 10px">
+        <a href="" class="btn btn-light disabled" role="button" tabindex="-1"
+          >Type of Establishment</a
+        >
+        <input
+          type="text"
+          id="myInput"
+          class="form-control btn-light"
+          placeholder="Ex: Sushi, Fries, Steak"
+          name="type"
+          value="{{ request.form.type }}"
+          aria-label="Ex: Sushi, Fries, Steak"
+        />
+      </div>
+      <div class="col-md-1">
+        <input
+          class="btn btn-light"
+          id="submitkey"
+          type="submit"
+          value="Submit"
+        />
+      </div>
     </div>
 
     <script>
-        var input = document.getElementById("myInput");
-        input.addEventListener("keyup", function(event) {
+      var input = document.getElementById("myInput");
+      input.addEventListener("keyup", function (event) {
         event.preventDefault();
         if (event.keyCode === 13) {
-        document.getElementById("submitkey").click();
+          document.getElementById("submitkey").click();
         }
-        });
+      });
     </script>
-
-</form>
+  </form>
   {{ error }}
-<br> </br>
+  <br /><br />
+  {% endif %} {% if found %}
+  <br /><br />
+  <h3 class="text-center" style="font-family: 'Lato', sans-serif">
+    Here are your results!
+  </h3>
+  <br /><br />
+  <div class="container-fluid">
+    {% for restroom in data %} {% set index = loop.index %} {% if index in [1,
+    4] %}
+    <div class="card-deck x-3">
+      {% endif %}
 
-<br> </br>
-</div>
-
-
-{% endif %}
-
-{% if found %}
-
-<br> </br>
-
-<h3 class="text-center" style="font-family: 'Lato', sans-serif;">Here are your results!</h3><br><br>
-<div class="container-fluid">
-  {% for restroom in data %}
-  {% set index = loop.index %}
-  {% if (index == 1 or index == 4) %}
-  <div class="card-deck x-3">
-    {% endif %}
-
-    <div class="card card-img bg-transparent w3-card-4 rounded" style="padding: 15px">
-      <a href="{{ restroom['url'] }}" target="_blank">
-        <div class="rounded w3-card"
-          style="width: 95%; height: 300px; overflow: hidden; margin: 10px; position: relative;">
-          <img class="text-center"
-            style="position: absolute; left: -1000%; right: -1000%; top: -1000%; bottom: -1000%; margin: auto; min-height: 100%; min-width: 100%;"
-            src="{{ restroom['image_url'] }}" />
+      <div
+        class="card card-img bg-transparent w3-card-4 rounded"
+        style="padding: 15px"
+      >
+        <a href="{{ restroom['url'] }}" target="_blank">
+          <div
+            class="rounded w3-card"
+            style="
+              width: 95%;
+              height: 300px;
+              overflow: hidden;
+              margin: 10px;
+              position: relative;
+            "
+          >
+            <img
+              class="text-center"
+              style="
+                position: absolute;
+                left: -1000%;
+                right: -1000%;
+                top: -1000%;
+                bottom: -1000%;
+                margin: auto;
+                min-height: 100%;
+                min-width: 100%;
+              "
+              src="{{ restroom['image_url'] }}"
+            />
+          </div>
+        </a>
+        <div class="card-body bg-transparent">
+          <h4 class="card-title" style="font-family: 'Lato', sans-serif">
+            {{ restroom['name'] }}
+          </h4>
+          <p class="card-text">
+            {{ restroom['location']['address1'] }}.<br />
+            {{ restroom['location']['city'] }}, {{ restroom['location']['state']
+            }} {{ restroom['location']['zip_code'] }}
+          </p>
         </div>
-      </a>
-      <div class="card-body bg-transparent">
-        <h4 class="card-title" style="font-family: 'Lato', sans-serif;">{{ restroom['name'] }}</h4>
-        <p class="card-text">{{ restroom['location']['address1'] }}. <br> {{ restroom['location']['city'] }}, {{
-          restroom['location']['state'] }} {{ restroom['location']['zip_code'] }}</p>
+        <div class="card-footer bg-transparent">
+          <small class="text-bold"
+            >{{ restroom['rating'] }} | Rated by {{ restroom['review_count']
+            }}</small
+          >
+        </div>
       </div>
-      <div class="card-footer bg-transparent">
-        <small class="text-bold">{{ restroom['rating'] }} | Rated by {{ restroom['review_count'] }}</small>
-      </div>
+
+      {% if index in [3, 6] %}
     </div>
-
-    {% if (index == 3 or index == 6) %}
+    {% endif %} {% if index in [3, 6] %}
+    <div class="d-none d-md-block"><br /><br /></div>
+    {% endif %} {% endfor %}
   </div>
   {% endif %}
-
-
-  {% if index == 3 or index == 6 %}
-  <div class="d-none d-md-block">
-    <br><br>
-  </div>
-  {% endif %}
-
-  {% endfor %}
-
-  {% endif %}
-
-  {% endblock %}
+</div>
+{% endblock %}

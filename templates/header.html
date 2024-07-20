@@ -1,77 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     {% block head %}
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        
-        <link href="{{ url_for('static', filename='images/apple-touch-icon.png') }}" rel="apple-touch-icon" sizes="180x180">
-        <link href="{{ url_for('static', filename='images/favicon-32x32.png') }}" rel="icon" type="image/png" sizes="32x32">
-        <link href="{{ url_for('static', filename='images/favicon-16x16.png') }}" rel="icon" type="image/png" sizes="16x16">
-        <link href="{{ url_for('static', filename='images/manifest.json') }}" rel="manifest">
-        <link href="{{ url_for('static', filename='images/safari-pinned-tab.svg') }}" rel="mask-icon" color="#5bbad5">
-        <link href="{{ url_for('static', filename='images/favicon.ico') }}" rel="shortcut icon">
-        <meta name="msapplication-config" content="{{ url_for('static', filename='images/browserconfig.xml') }}">
-        <meta name="google-site-verification" content="9nsIofsMOLNg2_saks11yFfeW6Z6SJ6ao1R3G-cBJ6w" />
-        <meta name="theme-color" content="#ffffff">
-        <!-- Google Material Icons -->
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <!-- GNR StyleSheet -->
-        <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-120510002-1"></script>
-            <script>
-                window.dataLayer = window.dataLayer || [];
-                function gtag() { dataLayer.push(arguments); }
-                    gtag('js', new Date());
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
-                    gtag('config', 'UA-120510002-1');
-            </script>
-            {% block styles %}
-            <!-- Bootstrap CSS -->
-            {{ bootstrap.load_css() }}
+    <!-- Favicon and Apple Icons -->
+    <link
+      href="{{ url_for('static', filename='images/apple-touch-icon.png') }}"
+      rel="apple-touch-icon"
+      sizes="180x180"
+    />
+    <link
+      href="{{ url_for('static', filename='images/favicon-32x32.png') }}"
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+    />
+    <link
+      href="{{ url_for('static', filename='images/favicon-16x16.png') }}"
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+    />
+    <link
+      href="{{ url_for('static', filename='images/manifest.json') }}"
+      rel="manifest"
+    />
+    <link
+      href="{{ url_for('static', filename='images/safari-pinned-tab.svg') }}"
+      rel="mask-icon"
+      color="#5bbad5"
+    />
+    <link
+      href="{{ url_for('static', filename='images/favicon.ico') }}"
+      rel="shortcut icon"
+    />
+    <meta
+      name="msapplication-config"
+      content="{{ url_for('static', filename='images/browserconfig.xml') }}"
+    />
+    <meta
+      name="google-site-verification"
+      content="9nsIofsMOLNg2_saks11yFfeW6Z6SJ6ao1R3G-cBJ6w"
+    />
+    <meta name="theme-color" content="#ffffff" />
 
-            
+    <!-- Google Material Icons -->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+
+    <!-- GNR StyleSheet -->
+    <link
+      href="{{ url_for('static', filename='css/style.css') }}"
+      rel="stylesheet"
+    />
+
+    <!-- Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-120510002-1"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "UA-120510002-1");
+    </script>
+
+    {% block styles %}
+    <!-- Bootstrap CSS -->
+    {{ bootstrap.load_css() }} {% endblock %}
+
+    <title>GNR: Restrooms For All</title>
     {% endblock %}
-            
-    <title>
-        GNR: Restrooms For All
-    </title>
-    {% endblock %}
+  </head>
 
-</head>
-
-<body>
+  <body>
     <nav class="navbar navbar-expand-lg bg-transparent">
-    
-        <a class="navbar-brand" href="http://restroom.network/">
-            <img src="{{ url_for('static', filename='images/rainbow.png') }}" width="30" height="30">
-        </a>
-    
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
-            aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    
-        <div class="collapse navbar-collapse bg-transparent" id="navbarTogglerDemo01">
-            <a class="navbar-brand" href="http://restroom.network/">GNR: Restrooms for All</a>
-            <ul>
-            </ul>
-        </div>
-    
-        <a href="http://restroom.network/about" style="text-decoration : none;"><i class="material-icons">more_vert</i></a>
+      <a class="navbar-brand" href="http://restroom.network/">
+        <img
+          src="{{ url_for('static', filename='images/rainbow.png') }}"
+          width="30"
+          height="30"
+        />
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarTogglerDemo01"
+        aria-controls="navbarTogglerDemo01"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div
+        class="collapse navbar-collapse bg-transparent"
+        id="navbarTogglerDemo01"
+      >
+        <a class="navbar-brand" href="http://restroom.network/"
+          >GNR: Restrooms for All</a
+        >
+        <ul></ul>
+      </div>
+      <a href="http://restroom.network/about" style="text-decoration: none">
+        <i class="material-icons">more_vert</i>
+      </a>
     </nav>
 
-
-            <!-- Your page content -->
-        {% block content %}{% endblock %}
-
-            {% block scripts %}
-            
-            <!-- Optional JavaScript -->
-            {{ bootstrap.load_js() }}
-            {% endblock %}
-</body>
-
+    <!-- Page content -->
+    {% block content %}{% endblock %} {% block scripts %}
+    <!-- Optional JavaScript -->
+    {{ bootstrap.load_js() }} {% endblock %}
+  </body>
 </html>
