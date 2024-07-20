@@ -21,7 +21,7 @@ export FLASK_DEBUG=true
 
 ## install dependencies
 
-- `pip install -r requirements.txt` install python requirements
+- `pip3 install -r requirements.txt` install python requirements
 
 ## create .env in project directory
 

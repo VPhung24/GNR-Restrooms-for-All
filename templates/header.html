@@ -76,51 +76,39 @@
       gtag("config", "UA-120510002-1");
     </script>
 
-    {% block styles %}
-    <!-- Bootstrap CSS -->
-    {{ bootstrap.load_css() }} {% endblock %}
+    <!-- Tailwind -->
+    <link
+      href="{{ url_for('static', filename='css/main.css') }}"
+      rel="stylesheet"
+    />
 
     <title>GNR: Restrooms For All</title>
     {% endblock %}
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg bg-transparent">
-      <a class="navbar-brand" href="http://restroom.network/">
-        <img
-          src="{{ url_for('static', filename='images/rainbow.png') }}"
-          width="30"
-          height="30"
-        />
-      </a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarTogglerDemo01"
-        aria-controls="navbarTogglerDemo01"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div
-        class="collapse navbar-collapse bg-transparent"
-        id="navbarTogglerDemo01"
-      >
-        <a class="navbar-brand" href="http://restroom.network/"
-          >GNR: Restrooms for All</a
-        >
-        <ul></ul>
+    <header class="sticky">
+      <div class="container mx-auto">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center gap-2">
+            <a class="navbar-brand" href="http://restroom.network/">
+              <img
+                src="{{ url_for('static', filename='images/rainbow.png') }}"
+                width="30"
+                height="30"
+              />
+            </a>
+            <span class="text-xl font-semibold">GNR: Restrooms for All</span>
+          </div>
+          <a href="http://restroom.network/about" style="text-decoration: none">
+            <i class="material-icons">more_vert</i>
+          </a>
+        </div>
       </div>
-      <a href="http://restroom.network/about" style="text-decoration: none">
-        <i class="material-icons">more_vert</i>
-      </a>
-    </nav>
-
+    </header>
     <!-- Page content -->
     {% block content %}{% endblock %} {% block scripts %}
     <!-- Optional JavaScript -->
-    {{ bootstrap.load_js() }} {% endblock %}
+    {% endblock %}
   </body>
 </html>

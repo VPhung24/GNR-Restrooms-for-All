@@ -17,6 +17,7 @@ Levenshtein==0.20.9
 MarkupSafe==2.1.2
 pathlib-mate==1.2.1
 prettytable==3.6.0
+pytailwindcss==0.2.0
 python-dotenv==0.21.0
 python-Levenshtein==0.20.9
 rapidfuzz==2.13.7

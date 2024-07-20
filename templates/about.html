@@ -1,86 +1,97 @@
 {% extends "header.html" %} {% block content %}
 <div
-  class="container-fluid"
-  style="padding-left: 12%; padding-right: 12%; min-height: 100%"
+  class="flex flex-col h-[calc(100vh-4rem)] justify-center items-center px-4"
 >
-  <br /><br />
-  <section class="content-section-a">
-    <div class="row">
-      <div class="col-lg-5 ml-auto">
-        <div class="embed-responsive embed-responsive-16by9">
-          <iframe
-            class="embed-responsive-item"
-            src="https://youtube.com/embed/N4HFFNM81Ow"
-            allowfullscreen
-          ></iframe>
+  <div class="container max-w-4xl mx-auto px-4 py-8">
+    <section>
+      <div class="flex flex-wrap -mx-4">
+        <div class="w-full lg:w-1/2 px-4 mb-8 lg:mb-0">
+          <div class="relative" style="padding-top: 56.25%">
+            <iframe
+              class="absolute top-0 left-0 w-full h-full"
+              src="https://youtube.com/embed/N4HFFNM81Ow"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+        <div class="w-full lg:w-1/2 px-4">
+          <div class="mt-4 lg:mt-0">
+            <p class="text-lg mb-4">
+              GNR: Restrooms for All searches over 50 million businesses across
+              America for gender neutral restrooms. This web app was created by
+              Vivian Phung, Raymond Huang, Hannah Barr, and Rachel Yang and won
+              the 2017 Congressional App Challenge for
+              <a
+                href="http://www.congressionalappchallenge.us/"
+                target="_blank"
+                class="text-blue-600 hover:underline"
+                >California's 13th Congressional District</a
+              >!
+            </p>
+            <div class="text-sm">
+              <a
+                href="http://vphung.pythonanywhere.com/"
+                target="_blank"
+                class="text-blue-600 hover:underline"
+                >Website</a
+              >
+              <span>|</span>
+              <a
+                href="https://github.com/VPhung24/esafe_pythonanywhere"
+                target="_blank"
+                class="text-blue-600 hover:underline"
+                >Repository</a
+              >
+              <span>|</span>
+              <a
+                href="http://www.congressionalappchallenge.us/about/2017-winners/"
+                target="_blank"
+                class="text-blue-600 hover:underline"
+                >2017 Awardees</a
+              >
+              <span>|</span>
+              <a
+                href="http://www.congressionalappchallenge.us/gender-neutral-restroom-locator-wins-for-the-2017-congressional-app-challenge-in-californias-13th-congressional-district-represented-by-barbara-lee/"
+                target="_blank"
+                class="text-blue-600 hover:underline"
+                >Press Release</a
+              >
+              <span>|</span>
+              <a
+                href="http://lgbtweekly.com/2017/12/26/gender-neutral-restroom-locator-wins-for-the-2017-congressional-app-challenge-in-california/"
+                target="_blank"
+                class="text-blue-600 hover:underline"
+                >LGBT Weekly</a
+              >
+              <span>|</span>
+              <a
+                href="https://patch.com/california/alameda/alameda-students-recognized-gender-neutral-restroom-app"
+                target="_blank"
+                class="text-blue-600 hover:underline"
+                >Alameda Patch</a
+              >
+              <span>|</span>
+              <a
+                href="http://www.alameda.k12.ca.us/groups/news_item?d=x&id=1513076178880&group_id=1219690087162&return_url=1519667282672"
+                target="_blank"
+                class="text-blue-600 hover:underline"
+                >Alameda Unified</a
+              >
+              <span>|</span>
+              <a
+                href="https://www.alamedasun.com/news/alameda-kids-win-national-award-coding-app"
+                target="_blank"
+                class="text-blue-600 hover:underline"
+                >Alameda Sun</a
+              >
+            </div>
+            <p class="text-sm text-gray-600 mt-4">
+              #HouseOfCode on April 12th, 13th, and 14th, 2018
+            </p>
+          </div>
         </div>
       </div>
-      <div class="col-lg-5 mr-auto">
-        <br />
-        <p class="card-title mb-2">
-          GNR: Restrooms for All searches over 50 million businesses across
-          America for gender neutral restrooms. This web app was created by
-          Vivian Phung, Raymond Huang, Hannah Barr, and Rachel Yang and won the
-          2017 Congressional App Challenge for
-          <a href="http://www.congressionalappchallenge.us/" target="_blank"
-            >California's 13th Congressional District</a
-          >!
-        </p>
-        <br />
-        <div>
-          <a href="http://vphung.pythonanywhere.com/" target="_blank"
-            >Website</a
-          >
-          |
-          <a
-            href="https://github.com/VPhung24/esafe_pythonanywhere"
-            target="_blank"
-            >Repository</a
-          >
-          |
-          <a
-            href="http://www.congressionalappchallenge.us/about/2017-winners/"
-            target="_blank"
-            >2017 Awardees</a
-          >
-          |
-          <a
-            href="http://www.congressionalappchallenge.us/gender-neutral-restroom-locator-wins-for-the-2017-congressional-app-challenge-in-californias-13th-congressional-district-represented-by-barbara-lee/"
-            target="_blank"
-            >Press Release</a
-          >
-          |
-          <a
-            href="http://lgbtweekly.com/2017/12/26/gender-neutral-restroom-locator-wins-for-the-2017-congressional-app-challenge-in-california/"
-            target="_blank"
-            >LGBT Weekly</a
-          >
-          |
-          <a
-            href="https://patch.com/california/alameda/alameda-students-recognized-gender-neutral-restroom-app"
-            target="_blank"
-            >Alameda Patch</a
-          >
-          |
-          <a
-            href="http://www.alameda.k12.ca.us/groups/news_item?d=x&id=1513076178880&group_id=1219690087162&return_url=1519667282672"
-            target="_blank"
-            >Alameda Unified</a
-          >
-          |
-          <a
-            href="https://www.alamedasun.com/news/alameda-kids-win-national-award-coding-app"
-            target="_blank"
-            >Alameda Sun</a
-          >
-        </div>
-        <p class="card-text">
-          <small class="text-muted"
-            >#HouseOfCode on April 12th, 13th, and 14th, 2018</small
-          >
-        </p>
-      </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </div>
 {% endblock %}

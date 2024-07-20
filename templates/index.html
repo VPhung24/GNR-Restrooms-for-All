@@ -1,55 +1,56 @@
 {% extends "header.html" %} {% block content %}
 <div
-  class="container-fluid"
-  style="padding-left: 12%; padding-right: 12%; min-height: 100%"
+  class="flex flex-col h-[calc(100vh-4rem)] justify-center items-center px-4"
 >
-<br /><br />
-<div class="d-none d-md-block d-lg-none"><br /><br /></div>
-<div class="d-none d-lg-block"><br /><br /><br /><br /><br /><br /></div>
-  <div class="d-none d-lg-block">
-    <h1>Find Gender Neutral Restrooms</h1>
-  </div>
-
-  <form method="post" class="form-inline">
-  <div class="d-block d-sm-block"><br /><br /></div>
-  <div class="row">
-    <div class="col-md-auto" style="padding-bottom: 10px">
-      <input
-        type="text"
-        id="myInput"
-        class="form-control btn-light"
-        placeholder="Ex: Sushi, Fries, Steak"
-        name="type"
-        value="{{ request.form.type }}"
-        aria-label="Ex: Sushi, Fries, Steak"
-      />
+  <div class="w-full max-w-sm">
+    <div class="mb-8 text-center">
+      <h1 class="text-3xl font-bold">Find Gender Neutral Restrooms</h1>
     </div>
 
-    <div class="col-md-auto" style="padding-bottom: 10px">
-      <div class="dropdown">
-        <input
-          type="text"
-          class="form-control"
-          id="addressInput"
-          placeholder="Enter address or zip code"
-          autocomplete="off"
-          name="location"
-        />
-        <ul class="dropdown-menu" id="addressDropdown"></ul>
+    <form method="post" class="w-full">
+      <div class="space-y-4">
+        <div>
+          <input
+            type="text"
+            id="myInput"
+            class="w-full px-4 py-2 border rounded-md text-center placeholder-center focus:outline-none focus:ring-0 focus:border-gray-300"
+            placeholder="Ex: Sushi, Fries, Steak"
+            name="type"
+            value="{{ request.form.type }}"
+            aria-label="Ex: Sushi, Fries, Steak"
+          />
+        </div>
+
+        <div class="relative">
+          <input
+            type="text"
+            class="w-full px-4 py-2 border rounded-md text-center placeholder-center focus:outline-none focus:ring-0 focus:border-gray-300"
+            id="addressInput"
+            placeholder="Enter address or zip code"
+            autocomplete="off"
+            name="location"
+          />
+          <ul
+            class="absolute w-full mt-1 bg-white border rounded-md shadow-lg hidden max-h-60 overflow-y-auto z-10 text-center"
+            id="addressDropdown"
+          ></ul>
+        </div>
+
+        <div>
+          <input
+            class="w-full px-4 py-2 bg-blue-500 text-white rounded-md cursor-pointer hover:bg-blue-600 focus:outline-none focus:ring-0"
+            id="submitkey"
+            type="submit"
+            value="Submit"
+          />
+        </div>
       </div>
-    </div>
-    <div class="col-md-1">
-      <input
-        class="btn btn-light"
-        id="submitkey"
-        type="submit"
-        value="Submit"
-      />
-    </div>
-  </div>
+    </form>
 
-  {{ error }}
-  <br /><br />
+    {% if error %}
+    <p class="mt-4 text-red-500 text-center">{{ error }}</p>
+    {% endif %}
+  </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -131,12 +132,12 @@
   });
 
   var input = document.getElementById("myInput");
-      input.addEventListener("keyup", function (event) {
-        event.preventDefault();
-        if (event.keyCode === 13) {
-          document.getElementById("submitkey").click();
-        }
-      });
+  input.addEventListener("keyup", function (event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+      document.getElementById("submitkey").click();
+    }
+  });
 </script>
 
 <style>
