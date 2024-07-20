@@ -1,36 +1,34 @@
 # GNR: Restrooms for All
 
-built in high school
+This is a simple web app built in high school to find gender-neutral restrooms anywhere in the US. Visit [restroom.network](https://restroom.network) to see it in action.
 
-## set in `.zshrc`
+- web framework: [flask](https://flask.palletsprojects.com/en/2.2.x)
+- template engine: [jinja2](https://jinja.palletsprojects.com/en/3.1.x)
+- css framework: current [tailwindcss](https://tailwindcss.com); past [bootstrap](https://getbootstrap.com)
 
-```zsh
-export FLASK_APP=main.py
-export FLASK_DEBUG=true
-```
+## Getting Started
 
-## virtual environment
+### Virtual Environment
 
 - `python3 -m venv venv` create virtual env folder (run once)
 - `. venv/bin/activate` enter virtual env
 - `deactivate` leave virtual env
 
-## requirement
-
-- python3.10
-
-## install dependencies
+### Install Dependencies
 
 - `pip3 install -r requirements.txt` install python requirements
 
-## create .env in project directory
+### Create .env in project directory
 
 ```zsh
 cp .env.example .env
 ```
 
-## run app (dev)
+### Development
 
-- `flask run` start the server for development
+- `flask --app main --debug run` start the server for development
+- `tailwindcss -i styles/main.css -o static/css/main.css --watch` start tailwindcss
 
-- if you didn't update your `.zshrc`, `flask --app main --debug run`
+## License
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
