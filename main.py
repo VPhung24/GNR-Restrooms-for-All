@@ -94,6 +94,45 @@ def results():
     )
 
 
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return (
+        render_template(
+            "error.html", error_message="Woops, this page does not exist (404)"
+        ),
+        404,
+    )
+
+
+@app.errorhandler(405)
+def method_not_allowed(e):
+    return (
+        render_template(
+            "error.html",
+            error_message="That request method is not permitted on this page (405)",
+        ),
+        405,
+    )
+
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template("error.html", error_message=f"500 {e}"), 500
+
+
+@app.route("/slashboard/")
+def slashboard():
+    try:
+        return render_template("index.html")
+    except Exception as e:
+        return render_template("error.html", error_message=f"500 {e}"), 500
+
+
 # Create the database tables
 with app.app_context():
     db.create_all()
